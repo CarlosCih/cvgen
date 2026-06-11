@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="{% block html_lang %}en{% endblock %}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}CV Manager{% endblock %}</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{% static 'js/custom_tailwind.js' %}"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+
+    {% block extra_head %}{% endblock %}
+  </head>
+
+  <body
+    class="min-h-screen text-slate-800 selection:bg-brand-100 selection:text-brand-800"
+  >
+    {% block header %}
+    <header class="relative">
+      <div
+        class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-600 via-indigo-600 to-sky-500"
+      ></div>
+      <div
+        class="absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-white/90 to-transparent"
+      ></div>
+
+      <div class="max-w-7xl mx-auto px-6 pt-8 pb-24">
+        <div class="flex items-center justify-between gap-6">
+          <div class="flex items-center gap-3">
+            <div
+              class="h-10 w-10 rounded-xl bg-white/20 backdrop-blur ring-1 ring-white/30 grid place-items-center"
+            >
+              {% block header_icon %}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="w-5 h-5 text-white"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 2l1.9 5.9L20 10l-6.1 2.1L12 18l-1.9-5.9L4 10l6.1-2.1L12 2z"
+                />
+              </svg>
+              {% endblock %}
+            </div>
+            <div>
+              <h1
+                class="text-white text-2xl md:text-3xl font-bold tracking-tight"
+              >
+                {% block header_title %}CV Manager{% endblock %}
+              </h1>
+              <p class="text-white/80 text-sm">
+                {% block header_subtitle %}Crea, previsualiza y gestiona currículums de manera hermosa.{% endblock %}
+              </p>
+            </div>
+          </div>
+
+          <div class="hidden md:flex items-center gap-3">
+            {% block header_actions %}{% endblock %}
+          </div>
+        </div>
+      </div>
+    </header>
+    {% endblock %}
+
+    <main class="{% block main_class %}max-w-7xl mx-auto px-6 -mt-16{% endblock %}">
+      {% block content %}{% endblock %}
+
+      {% block footer %}
+      <footer
+        class="max-w-7xl mx-auto px-6 text-center text-sm text-slate-500 py-10"
+      >
+        <p>
+          &copy; {% now "Y" %} CV Manager. Built with Django &amp; Tailwind.
+        </p>
+      </footer>
+      {% endblock %}
+    </main>
+
+    {% block extra_body %}{% endblock %}
+  </body>
+</html>
