@@ -1,0 +1,283 @@
+{% extends 'base.html' %} {% block title %} Dashboard &middot; CV Manager {% endblock %} {% block header %}
+<header class="relative">
+  <div
+    class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-600 via-indigo-600 to-sky-500"
+  ></div>
+  <div
+    class="absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-white/90 to-transparent"
+  ></div>
+
+  <div class="max-w-7xl mx-auto px-6 pt-8 pb-24">
+    <div class="flex items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div
+          class="h-10 w-10 rounded-xl bg-white/20 backdrop-blur ring-1 ring-white/30 grid place-items-center"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="w-5 h-5 text-white"
+            aria-hidden="true"
+          >
+            <path
+              d="M12 2l1.9 5.9L20 10l-6.1 2.1L12 18l-1.9-5.9L4 10l6.1-2.1L12 2z"
+            />
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-white text-2xl md:text-3xl font-bold tracking-tight">
+            Your CVs
+          </h1>
+          <p class="text-white/80 text-sm">
+            Crea, previsualiza y gestiona curriculums de manera hermosa.
+          </p>
+        </div>
+      </div>
+
+      <div class="hidden md:flex items-center gap-3">
+        <form action="" method="get" class="relative">
+          <input
+            type="search"
+            name="q"
+            value="{{ query }}"
+            placeholder="Search by name or email..."
+            class="w-64 rounded-xl bg-white/15 text-white placeholder-white/70 px-4 py-2.5 outline-none ring-1 ring-white/25 focus:ring-2 focus:ring-white/60 backdrop-blur"
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="w-5 h-5 absolute right-3 top-2.5 text-white/80"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 2a8 8 0 105.293 14.293l3.707 3.707a1 1 0 001.414-1.414l-3.707-3.707A8 8 0 0010 2zm-6 8a6 6 0 1110.392 4.242A6 6 0 014 10z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </form>
+        <a
+          href="#"
+          class="inline-flex items-center gap-2 rounded-xl bg-white text-brand-700 font-semibold px-4 py-2.5 shadow-soft hover:shadow-hover transition"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="w-5 h-5"
+            aria-hidden="true"
+          >
+            <path
+              d="M12 5a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H6a1 1 0 110-2h5V6a1 1 0 011-1z"
+            />
+          </svg>
+          Crear CV
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+{% endblock %} {% block content %}
+<main class="max-w-7xl mx-auto px-6 -mt-16">
+  <div
+    class="bg-white/70 backdrop-blur-xl rounded-2xl shadow-soft ring-1 ring-slate-200 p-6 md:p-8"
+  >
+    <div class="md:hidden mb-5 flex justify-end">
+      <a
+        href="#"
+        class="inline-flex items-center gap-2 rounded-xl bg-brand-600 text-white font-medium px-4 py-2.5 shadow-soft hover:bg-brand-700 transition"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-5 h-5"
+          aria-hidden="true"
+        >
+          <path
+            d="M12 5a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H6a1 1 0 110-2h5V6a1 1 0 011-1z"
+          />
+        </svg>
+        Crear CV
+      </a>
+    </div>
+
+    {% if resumes %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for resume in resumes %}
+      <article
+        class="group rounded-2xl border border-slate-200 bg-white p-5 shadow-soft hover:shadow-hover hover:-translate-y-0.5 transition transform"
+      >
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex items-center gap-3 min-w-0">
+            <div
+              class="h-10 w-10 shrink-0 rounded-xl bg-brand-100 text-brand-700 grid place-items-center font-semibold"
+            >
+              {{ resume.name|default:'?'|slice:':1'|upper }}
+            </div>
+            <div class="min-w-0">
+              <h2 class="text-base font-semibold text-slate-900 truncate">
+                {{ resume.name }}
+              </h2>
+              <p class="text-xs text-slate-500 truncate">{{ resume.email }}</p>
+            </div>
+          </div>
+          <span class="inline-flex items-center gap-1 text-xs text-slate-500">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-4 h-4"
+              aria-hidden="true"
+            >
+              <path
+                d="M6.75 3A2.75 2.75 0 004 5.75v12.5A2.75 2.75 0 006.75 21h10.5A2.75 2.75 0 0020 18.25V8.414a2.75 2.75 0 00-.805-1.945l-3.664-3.664A2.75 2.75 0 0013.586 2H6.75zM13 3.5v3.25c0 .69.56 1.25 1.25 1.25H17.5"
+              />
+            </svg>
+            #{{ resume.id }}
+          </span>
+        </div>
+
+        <div
+          class="my-4 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"
+        ></div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <a
+            href="#"
+            class="inline-flex items-center gap-1.5 text-sm font-medium text-brand-700 hover:text-brand-800"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-4 h-4"
+              aria-hidden="true"
+            >
+              <path
+                d="M4 5a2 2 0 012-2h9l5 5v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5z"
+              />
+            </svg>
+            Previsualizar
+          </a>
+
+          <a
+            href="#"
+            class="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-700 hover:text-emerald-800"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-4 h-4"
+              aria-hidden="true"
+            >
+              <path
+                d="M7 10a1 1 0 011-1h2V4a1 1 0 112 0v5h2a1 1 0 011 1v1h-2.586l1.293 1.293a1 1 0 01-1.414 1.414L12 12.414l-2.293 2.293a1 1 0 01-1.414-1.414L9.586 11H7V10z"
+              />
+              <path
+                d="M5 18a2 2 0 002 2h10a2 2 0 002-2v-3a1 1 0 112 0v3a4 4 0 01-4 4H7a4 4 0 01-4-4v-3a1 1 0 112 0v3z"
+              />
+            </svg>
+            Descargar PDF
+          </a>
+
+          <a
+            href="#"
+            class="inline-flex items-center gap-1.5 text-sm font-medium text-amber-700 hover:text-amber-800"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-4 h-4"
+              aria-hidden="true"
+            >
+              <path
+                d="M4 15.5V19a1 1 0 001 1h3.5a1 1 0 00.707-.293l9.5-9.5a1 1 0 000-1.414L15.207 5.293a1 1 0 00-1.414 0l-9.5 9.5A1 1 0 004 15.5z"
+              />
+            </svg>
+            Edit
+          </a>
+
+          <form action="#" method="post" class="inline">
+            {% csrf_token %}
+            <button
+              type="submit"
+              class="inline-flex items-center gap-1.5 text-sm font-medium text-rose-700 hover:text-rose-800"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="w-4 h-4"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M9 2a1 1 0 00-1 1v1H5a1 1 0 100 2h14a1 1 0 100-2h-3V3a1 1 0 00-1-1H9zm-2 6a1 1 0 011 1v9a2 2 0 002 2h4a2 2 0 002-2V9a1 1 0 112 0v9a4 4 0 01-4 4H10a4 4 0 01-4-4V9a1 1 0 011-1z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              Eliminar
+            </button>
+          </form>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div
+      class="rounded-2xl border-2 border-dashed border-slate-300 p-10 text-center bg-grid-soft bg-[size:20px_20px]"
+    >
+      <div
+        class="mx-auto mb-4 h-14 w-14 rounded-2xl bg-brand-100 text-brand-700 grid place-items-center"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-7 h-7"
+          aria-hidden="true"
+        >
+          <path
+            d="M12 6a6 6 0 00-6 6v5a3 3 0 003 3h6a3 3 0 003-3v-5a6 6 0 00-6-6z"
+          />
+          <path d="M9 6a3 3 0 116 0v1a3 3 0 11-6 0V6z" />
+        </svg>
+      </div>
+      <h3 class="text-lg font-semibold text-slate-900">
+        Aun no hay curriculums
+      </h3>
+      <p class="text-slate-600 max-w-md mx-auto mt-1">
+        Crea tu primer curriculum y comienza a impresionar a los reclutadores
+        con tu experiencia y habilidades.
+      </p>
+      <a
+        href="#"
+        class="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand-600 text-white font-semibold px-5 py-3 shadow-soft hover:bg-brand-700 transition"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-5 h-5"
+          aria-hidden="true"
+        >
+          <path
+            d="M12 5a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H6a1 1 0 110-2h5V6a1 1 0 011-1z"
+          />
+        </svg>
+        Crear CV
+      </a>
+    </div>
+    {% endif %}
+  </div>
+</main>
+{% endblock %} {% block footer %}
+<footer class="max-w-7xl mx-auto px-6 text-center text-sm text-slate-500 py-10">
+  <p>&copy; {% now "Y" %} CV Manager. Built with Django &amp; Tailwind.</p>
+</footer>
+{% endblock %}

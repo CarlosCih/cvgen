@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}CV Manager{% endblock %}</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{% static 'js/custom_tailwind.js' %}"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+
+    {% block extra_head %}{% endblock %}
+  </head>
+
+  <body class="{% block body_class %}min-h-screen text-slate-800 selection:bg-brand-100 selection:text-brand-800{% endblock %}">
+    {% block body %}
+      {% block header %}{% endblock %}
+      {% block content %}{% endblock %}
+      {% block footer %}{% endblock %}
+    {% endblock %}
+
+    {% block extra_body %}{% endblock %}
+  </body>
+</html>
