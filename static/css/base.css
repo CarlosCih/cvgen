@@ -11,3 +11,28 @@ body {
       transparent 35%
     );
 }
+.cv-form input,
+.cv-form textarea,
+.cv-form select {
+  width: 100%;
+  border-radius: 0.875rem;
+  border: 1px solid rgb(203 213 225);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.75rem 1rem;
+  color: rgb(15 23 42);
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+}
+
+.cv-form textarea {
+  min-height: 9rem;
+  resize: vertical;
+}
+
+.cv-form input:focus,
+.cv-form textarea:focus,
+.cv-form select:focus {
+  border-color: rgb(99 102 241);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.14);
+}

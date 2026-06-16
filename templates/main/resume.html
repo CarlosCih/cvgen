@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ user_profile.name }} &middot; Resume
+{% endblock %}
+
+{% block extra_head %}
+  <style>
+    @media print {
+      body {
+        background: #fff !important;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      .resume-sheet {
+        box-shadow: none !important;
+        border: 0 !important;
+        margin: 0 !important;
+        max-width: none !important;
+      }
+
+      .resume-main {
+        margin-top: 0 !important;
+        max-width: none !important;
+        padding: 0 !important;
+      }
+
+      @page {
+        margin: 18mm;
+      }
+    }
+  </style>
+{% endblock %}
+
+{% block header %}
+  <header class="no-print relative">
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-600 via-indigo-600 to-sky-500"></div>
+    <div class="absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-white/90 to-transparent"></div>
+
+    <div class="mx-auto max-w-5xl px-6 pb-24 pt-8">
+      <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex items-center gap-3">
+          <div class="grid h-10 w-10 place-items-center rounded-xl bg-white/20 ring-1 ring-white/30 backdrop-blur">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 text-white" aria-hidden="true">
+              <path d="M4 5a2 2 0 012-2h9l5 5v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" />
+            </svg>
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold tracking-tight text-white md:text-3xl">Vista previa del CV</h1>
+            <p class="text-sm text-white/80">Revisa el curriculum antes de imprimirlo o guardarlo como PDF.</p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+          <a href="{% url 'profile' %}" class="inline-flex items-center gap-2 rounded-xl bg-white/15 px-4 py-2.5 font-semibold text-white ring-1 ring-white/25 backdrop-blur transition hover:bg-white/25">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5" aria-hidden="true">
+              <path fill-rule="evenodd" d="M10.707 4.293a1 1 0 010 1.414L6.414 10H20a1 1 0 110 2H6.414l4.293 4.293a1 1 0 01-1.414 1.414l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Volver
+          </a>
+          <a href="{% url 'edit_profile' user_profile.id %}" class="inline-flex items-center gap-2 rounded-xl bg-white/15 px-4 py-2.5 font-semibold text-white ring-1 ring-white/25 backdrop-blur transition hover:bg-white/25">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5" aria-hidden="true">
+              <path d="M4 15.5V19a1 1 0 001 1h3.5a1 1 0 00.707-.293l9.5-9.5a1 1 0 000-1.414L15.207 5.293a1 1 0 00-1.414 0l-9.5 9.5A1 1 0 004 15.5z" />
+            </svg>
+            Editar
+          </a>
+          <a href="{% url 'download_pdf' user_profile.id %}" class="inline-flex items-center gap-2 rounded-xl bg-white/15 px-4 py-2.5 font-semibold text-white ring-1 ring-white/25 backdrop-blur transition hover:bg-white/25">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5" aria-hidden="true">
+              <path d="M7 10a1 1 0 011-1h2V4a1 1 0 112 0v5h2a1 1 0 011 1v1h-2.586l1.293 1.293a1 1 0 01-1.414 1.414L12 12.414l-2.293 2.293a1 1 0 01-1.414-1.414L9.586 11H7V10z" />
+              <path d="M5 18a2 2 0 002 2h10a2 2 0 002-2v-3a1 1 0 112 0v3a4 4 0 01-4 4H7a4 4 0 01-4-4v-3a1 1 0 112 0v3z" />
+            </svg>
+            Descargar PDF
+          </a>
+          <button type="button" onclick="window.print()" class="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 font-semibold text-brand-700 shadow-soft transition hover:shadow-hover">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5" aria-hidden="true">
+              <path d="M6 3a2 2 0 00-2 2v5a4 4 0 00-2 3.464V17a2 2 0 002 2h1v1a2 2 0 002 2h10a2 2 0 002-2v-1h1a2 2 0 002-2v-3.536A4 4 0 0018 10V5a2 2 0 00-2-2H6zm10 7H8V5h8v5zm1 7v3H7v-5h10v2z" />
+            </svg>
+            Imprimir
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endblock %}
+
+{% block content %}
+  <main class="resume-main mx-auto max-w-5xl px-6 pb-12 -mt-16">
+    <article class="resume-sheet overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft">
+      <section class="grid grid-cols-1 lg:grid-cols-[17rem_1fr]">
+        <aside class="bg-slate-950 p-8 text-white">
+          <div class="mb-8">
+            <div class="mb-5 grid h-16 w-16 place-items-center rounded-2xl bg-brand-500 text-2xl font-bold text-white">
+              {{ user_profile.name|default:'?'|slice:':1'|upper }}
+            </div>
+            <h2 class="text-3xl font-bold leading-tight">{{ user_profile.name }}</h2>
+            <p class="mt-2 text-sm font-medium text-brand-200">{{ user_profile.degree }}</p>
+          </div>
+
+          <div class="space-y-6">
+            <section>
+              <h3 class="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-slate-400">Contacto</h3>
+              <ul class="space-y-3 text-sm text-slate-200">
+                <li class="flex gap-3">
+                  <span class="mt-0.5 text-brand-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true">
+                      <path d="M1.5 8.67v8.58A2.25 2.25 0 003.75 19.5h16.5a2.25 2.25 0 002.25-2.25V8.67l-9.27 5.43a2.25 2.25 0 01-2.28 0L1.5 8.67z" />
+                      <path d="M22.5 6.908V6.75a2.25 2.25 0 00-2.25-2.25H3.75A2.25 2.25 0 001.5 6.75v.158l10.2 5.97c.185.108.415.108.6 0l10.2-5.97z" />
+                    </svg>
+                  </span>
+                  <span class="break-all">{{ user_profile.email }}</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="mt-0.5 text-brand-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M1.5 4.5A3 3 0 014.5 1.5h1.372c.86 0 1.61.586 1.819 1.42l.514 2.057a1.875 1.875 0 01-.49 1.775L6.59 7.877a11.25 11.25 0 005.533 5.533l1.125-1.125a1.875 1.875 0 011.775-.49l2.057.514a1.875 1.875 0 011.42 1.819V15.5a3 3 0 01-3 3h-.75C7.432 18.5 1.5 12.568 1.5 5.25V4.5z" clip-rule="evenodd" />
+                    </svg>
+                  </span>
+                  <span>{{ user_profile.phone }}</span>
+                </li>
+              </ul>
+            </section>
+
+            <section>
+              <h3 class="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-slate-400">Habilidades</h3>
+              <p class="text-sm leading-6 text-slate-200">{{ user_profile.skills }}</p>
+            </section>
+          </div>
+        </aside>
+
+        <div class="space-y-8 p-8 md:p-10">
+          <section>
+            <h3 class="mb-3 flex items-center gap-3 text-sm font-bold uppercase tracking-[0.16em] text-slate-500">
+              <span class="h-px w-8 bg-brand-500"></span>
+              Perfil profesional
+            </h3>
+            <p class="text-base leading-8 text-slate-700">{{ user_profile.sumary|linebreaksbr }}</p>
+          </section>
+
+          <section>
+            <h3 class="mb-4 flex items-center gap-3 text-sm font-bold uppercase tracking-[0.16em] text-slate-500">
+              <span class="h-px w-8 bg-brand-500"></span>
+              Educacion
+            </h3>
+            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+              <div class="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Grado</p>
+                  <p class="mt-1 font-semibold text-slate-900">{{ user_profile.degree }}</p>
+                </div>
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Universidad</p>
+                  <p class="mt-1 font-semibold text-slate-900">{{ user_profile.university }}</p>
+                </div>
+                <div class="sm:col-span-2">
+                  <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Escuela</p>
+                  <p class="mt-1 font-semibold text-slate-900">{{ user_profile.school }}</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h3 class="mb-3 flex items-center gap-3 text-sm font-bold uppercase tracking-[0.16em] text-slate-500">
+              <span class="h-px w-8 bg-brand-500"></span>
+              Experiencia previa
+            </h3>
+            <div class="prose prose-slate max-w-none">
+              <p class="text-base leading-8 text-slate-700">{{ user_profile.previous_work|linebreaksbr }}</p>
+            </div>
+          </section>
+        </div>
+      </section>
+    </article>
+  </main>
+{% endblock %}
+
+{% block footer %}
+  <footer class="no-print mx-auto max-w-5xl px-6 py-10 text-center text-sm text-slate-500">
+    <p>&copy; {% now "Y" %} CV Manager. Built with Django &amp; Tailwind.</p>
+  </footer>
+{% endblock %}
